@@ -2,6 +2,8 @@ import { useState } from "react";
 import DefectReport from "./components/DefectReport.jsx";
 import "./App.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function ManualCenteringAdjuster({ title, image, box, setBox }) {
   const displayWidth = 360;
   const displayHeight = 502;
@@ -287,7 +289,7 @@ function App() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/straighten-card", {
+      const response = await fetch(`${API_URL}/straighten-card`, {
         method: "POST",
         body: formData,
       });
@@ -324,7 +326,7 @@ function App() {
     if (!image) return null;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/surface-enhance", {
+      const response = await fetch(`${API_URL}/surface-enhance`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -382,7 +384,7 @@ function App() {
       setProgress(90);
       setCurrentStep("Sending original and embossed images to VLM");
 
-      const vlmResponse = await fetch("http://127.0.0.1:8000/vlm-grade-card", {
+      const vlmResponse = await fetch(`${API_URL}/vlm-grade-card`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
